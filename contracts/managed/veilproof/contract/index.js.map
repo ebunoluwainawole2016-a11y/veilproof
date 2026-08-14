@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../../",
+  "sources": ["contracts/veilproof.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;EAAA;;;;;;;;;;;;;GAAC;EAAD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GAAC;;;;;;;;;;;;;;;;;;;;;;;;;"
+}
