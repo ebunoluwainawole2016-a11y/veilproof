@@ -4,18 +4,22 @@ export type Witnesses<PS> = {
 }
 
 export type ImpureCircuits<PS> = {
+  verify(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type ProvableCircuits<PS> = {
+  verify(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type PureCircuits = {
 }
 
 export type Circuits<PS> = {
+  verify(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type Ledger = {
+  readonly verified: boolean;
 }
 
 export type ContractReferenceLocations = any;

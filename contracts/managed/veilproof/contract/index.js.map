@@ -4,5 +4,5 @@
   "sourceRoot": "../../../../",
   "sources": ["contracts/veilproof.compact"],
   "names": [],
-  "mappings": ";;;;;;;;;;;EAAA;;;;;;;;;;;;;GAAC;EAAD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GAAC;;;;;;;;;;;;;;;;;;;;;;;;;"
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAAA;;;;;;;;;;MAIA,AAAA,MAEC;;;;;;;;;;;;;;;;;;;;;;OAAA;;;;GACA;EAPD;;;;;;;;;;;;;;;;;;;;;;;;;;IAEA;;;;;;;;;yEAAgC;;;;;;;GAK/B;EAHD,AAAA,SAEC;IADC;;;;;;;;;yEAAQ;;GACT;;;;;;;;;;;;;;;;IAJD;qCAAA;;;;;;;;;;;0GAAgC;KAAA;;;;;;;;;;"
 }
