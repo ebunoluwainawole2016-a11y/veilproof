@@ -1,7 +1,11 @@
 pragma language_version >= 0.22 && <= 0.23;
 
+witness getPrivateValue(): Uint<64>;
+
 export ledger verified: Boolean;
 
-export circuit verify(): [] {
-  verified = true;
+export circuit verifyEligibility(minimum: Uint<64>): [] {
+  const privateValue = getPrivateValue();
+
+  verified = disclose(privateValue >= minimum);
 }

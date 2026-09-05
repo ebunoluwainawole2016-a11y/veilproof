@@ -1,25 +1,25 @@
 import * as __compactRuntime from '@midnight-ntwrk/compact-runtime';
 __compactRuntime.checkRuntimeVersion('0.16.0');
 
-const _descriptor_0 = __compactRuntime.CompactTypeBoolean;
+const _descriptor_0 = new __compactRuntime.CompactTypeUnsignedInteger(18446744073709551615n, 8);
 
-const _descriptor_1 = new __compactRuntime.CompactTypeUnsignedInteger(18446744073709551615n, 8);
+const _descriptor_1 = __compactRuntime.CompactTypeBoolean;
 
 const _descriptor_2 = new __compactRuntime.CompactTypeBytes(32);
 
 class _Either_0 {
   alignment() {
-    return _descriptor_0.alignment().concat(_descriptor_2.alignment().concat(_descriptor_2.alignment()));
+    return _descriptor_1.alignment().concat(_descriptor_2.alignment().concat(_descriptor_2.alignment()));
   }
   fromValue(value_0) {
     return {
-      is_left: _descriptor_0.fromValue(value_0),
+      is_left: _descriptor_1.fromValue(value_0),
       left: _descriptor_2.fromValue(value_0),
       right: _descriptor_2.fromValue(value_0)
     }
   }
   toValue(value_0) {
-    return _descriptor_0.toValue(value_0.is_left).concat(_descriptor_2.toValue(value_0.left).concat(_descriptor_2.toValue(value_0.right)));
+    return _descriptor_1.toValue(value_0.is_left).concat(_descriptor_2.toValue(value_0.left).concat(_descriptor_2.toValue(value_0.right)));
   }
 }
 
@@ -55,34 +55,54 @@ export class Contract {
     if (typeof(witnesses_0) !== 'object') {
       throw new __compactRuntime.CompactError('first (witnesses) argument to Contract constructor is not an object');
     }
+    if (typeof(witnesses_0.getPrivateValue) !== 'function') {
+      throw new __compactRuntime.CompactError('first (witnesses) argument to Contract constructor does not contain a function-valued field named getPrivateValue');
+    }
     this.witnesses = witnesses_0;
     this.circuits = {
-      verify: (...args_1) => {
-        if (args_1.length !== 1) {
-          throw new __compactRuntime.CompactError(`verify: expected 1 argument (as invoked from Typescript), received ${args_1.length}`);
+      verifyEligibility: (...args_1) => {
+        if (args_1.length !== 2) {
+          throw new __compactRuntime.CompactError(`verifyEligibility: expected 2 arguments (as invoked from Typescript), received ${args_1.length}`);
         }
         const contextOrig_0 = args_1[0];
+        const minimum_0 = args_1[1];
         if (!(typeof(contextOrig_0) === 'object' && contextOrig_0.currentQueryContext != undefined)) {
-          __compactRuntime.typeError('verify',
+          __compactRuntime.typeError('verifyEligibility',
                                      'argument 1 (as invoked from Typescript)',
-                                     'veilproof.compact line 5 char 1',
+                                     'veilproof.compact line 7 char 1',
                                      'CircuitContext',
                                      contextOrig_0)
         }
+        if (!(typeof(minimum_0) === 'bigint' && minimum_0 >= 0n && minimum_0 <= 18446744073709551615n)) {
+          __compactRuntime.typeError('verifyEligibility',
+                                     'argument 1 (argument 2 as invoked from Typescript)',
+                                     'veilproof.compact line 7 char 1',
+                                     'Uint<0..18446744073709551616>',
+                                     minimum_0)
+        }
         const context = { ...contextOrig_0, gasCost: __compactRuntime.emptyRunningCost() };
         const partialProofData = {
-          input: { value: [], alignment: [] },
+          input: {
+            value: _descriptor_0.toValue(minimum_0),
+            alignment: _descriptor_0.alignment()
+          },
           output: undefined,
           publicTranscript: [],
           privateTranscriptOutputs: []
         };
-        const result_0 = this._verify_0(context, partialProofData);
+        const result_0 = this._verifyEligibility_0(context,
+                                                   partialProofData,
+                                                   minimum_0);
         partialProofData.output = { value: [], alignment: [] };
         return { result: result_0, context: context, proofData: partialProofData, gasCost: context.gasCost };
       }
     };
-    this.impureCircuits = { verify: this.circuits.verify };
-    this.provableCircuits = { verify: this.circuits.verify };
+    this.impureCircuits = {
+      verifyEligibility: this.circuits.verifyEligibility
+    };
+    this.provableCircuits = {
+      verifyEligibility: this.circuits.verifyEligibility
+    };
   }
   initialState(...args_0) {
     if (args_0.length !== 1) {
@@ -91,6 +111,9 @@ export class Contract {
     const constructorContext_0 = args_0[0];
     if (typeof(constructorContext_0) !== 'object') {
       throw new __compactRuntime.CompactError(`Contract state constructor: expected 'constructorContext' in argument 1 (as invoked from Typescript) to be an object`);
+    }
+    if (!('initialPrivateState' in constructorContext_0)) {
+      throw new __compactRuntime.CompactError(`Contract state constructor: expected 'initialPrivateState' in argument 1 (as invoked from Typescript)`);
     }
     if (!('initialZswapLocalState' in constructorContext_0)) {
       throw new __compactRuntime.CompactError(`Contract state constructor: expected 'initialZswapLocalState' in argument 1 (as invoked from Typescript)`);
@@ -102,7 +125,7 @@ export class Contract {
     let stateValue_0 = __compactRuntime.StateValue.newArray();
     stateValue_0 = stateValue_0.arrayPush(__compactRuntime.StateValue.newNull());
     state_0.data = new __compactRuntime.ChargedState(stateValue_0);
-    state_0.setOperation('verify', new __compactRuntime.ContractOperation());
+    state_0.setOperation('verifyEligibility', new __compactRuntime.ContractOperation());
     const context = __compactRuntime.createCircuitContext(__compactRuntime.dummyContractAddress(), constructorContext_0.initialZswapLocalState.coinPublicKey, state_0.data, constructorContext_0.initialPrivateState);
     const partialProofData = {
       input: { value: [], alignment: [] },
@@ -117,8 +140,8 @@ export class Contract {
                                                  value: __compactRuntime.StateValue.newCell({ value: _descriptor_6.toValue(0n),
                                                                                               alignment: _descriptor_6.alignment() }).encode() } },
                                        { push: { storage: true,
-                                                 value: __compactRuntime.StateValue.newCell({ value: _descriptor_0.toValue(false),
-                                                                                              alignment: _descriptor_0.alignment() }).encode() } },
+                                                 value: __compactRuntime.StateValue.newCell({ value: _descriptor_1.toValue(false),
+                                                                                              alignment: _descriptor_1.alignment() }).encode() } },
                                        { ins: { cached: false, n: 1 } }]);
     state_0.data = new __compactRuntime.ChargedState(context.currentQueryContext.state.state);
     return {
@@ -127,7 +150,26 @@ export class Contract {
       currentZswapLocalState: context.currentZswapLocalState
     }
   }
-  _verify_0(context, partialProofData) {
+  _getPrivateValue_0(context, partialProofData) {
+    const witnessContext_0 = __compactRuntime.createWitnessContext(ledger(context.currentQueryContext.state), context.currentPrivateState, context.currentQueryContext.address);
+    const [nextPrivateState_0, result_0] = this.witnesses.getPrivateValue(witnessContext_0);
+    context.currentPrivateState = nextPrivateState_0;
+    if (!(typeof(result_0) === 'bigint' && result_0 >= 0n && result_0 <= 18446744073709551615n)) {
+      __compactRuntime.typeError('getPrivateValue',
+                                 'return value',
+                                 'veilproof.compact line 3 char 1',
+                                 'Uint<0..18446744073709551616>',
+                                 result_0)
+    }
+    partialProofData.privateTranscriptOutputs.push({
+      value: _descriptor_0.toValue(result_0),
+      alignment: _descriptor_0.alignment()
+    });
+    return result_0;
+  }
+  _verifyEligibility_0(context, partialProofData, minimum_0) {
+    const privateValue_0 = this._getPrivateValue_0(context, partialProofData);
+    const tmp_0 = privateValue_0 >= minimum_0;
     __compactRuntime.queryLedgerState(context,
                                       partialProofData,
                                       [
@@ -135,8 +177,8 @@ export class Contract {
                                                  value: __compactRuntime.StateValue.newCell({ value: _descriptor_6.toValue(0n),
                                                                                               alignment: _descriptor_6.alignment() }).encode() } },
                                        { push: { storage: true,
-                                                 value: __compactRuntime.StateValue.newCell({ value: _descriptor_0.toValue(true),
-                                                                                              alignment: _descriptor_0.alignment() }).encode() } },
+                                                 value: __compactRuntime.StateValue.newCell({ value: _descriptor_1.toValue(tmp_0),
+                                                                                              alignment: _descriptor_1.alignment() }).encode() } },
                                        { ins: { cached: false, n: 1 } }]);
     return [];
   }
@@ -156,7 +198,7 @@ export function ledger(stateOrChargedState) {
   };
   return {
     get verified() {
-      return _descriptor_0.fromValue(__compactRuntime.queryLedgerState(context,
+      return _descriptor_1.fromValue(__compactRuntime.queryLedgerState(context,
                                                                        partialProofData,
                                                                        [
                                                                         { dup: { n: 0 } },
@@ -174,7 +216,9 @@ export function ledger(stateOrChargedState) {
 const _emptyContext = {
   currentQueryContext: new __compactRuntime.QueryContext(new __compactRuntime.ContractState().data, __compactRuntime.dummyContractAddress())
 };
-const _dummyContract = new Contract({ });
+const _dummyContract = new Contract({
+  getPrivateValue: (...args) => undefined
+});
 export const pureCircuits = {};
 export const contractReferenceLocations =
   { tag: 'publicLedgerArray', indices: { } };

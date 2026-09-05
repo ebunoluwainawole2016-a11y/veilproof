@@ -1,0 +1,31 @@
+{
+  "name": "veilproof",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ebunoluwainawole2016-a11y/veilproof.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/ebunoluwainawole2016-a11y/veilproof/issues"
+  },
+  "homepage": "https://github.com/ebunoluwainawole2016-a11y/veilproof#readme",
+  "dependencies": {
+    "@midnight-ntwrk/compact-runtime": "^0.16.0",
+    "@midnight-ntwrk/midnight-js-contracts": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-network-id": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-protocol": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-types": "^4.1.1"
+  }
+}

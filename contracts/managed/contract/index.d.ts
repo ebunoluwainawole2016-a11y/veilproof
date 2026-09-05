@@ -1,21 +1,25 @@
 import type * as __compactRuntime from '@midnight-ntwrk/compact-runtime';
 
 export type Witnesses<PS> = {
+  getPrivateValue(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, bigint];
 }
 
 export type ImpureCircuits<PS> = {
-  verify(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
+  verifyEligibility(context: __compactRuntime.CircuitContext<PS>,
+                    minimum_0: bigint): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type ProvableCircuits<PS> = {
-  verify(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
+  verifyEligibility(context: __compactRuntime.CircuitContext<PS>,
+                    minimum_0: bigint): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type PureCircuits = {
 }
 
 export type Circuits<PS> = {
-  verify(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
+  verifyEligibility(context: __compactRuntime.CircuitContext<PS>,
+                    minimum_0: bigint): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type Ledger = {

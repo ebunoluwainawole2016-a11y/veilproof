@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../",
+  "sources": ["contracts/veilproof.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAAA;;;;;;;;;;;;;MAMA,AAAA,iBAIC;;;;;cAJgC,SAAiB;;;;;;;;;;;;;;;;;;yCAAjB,SAAiB;;;;;;;;;mDAAjB,SAAiB;;;OAIjD;;;;;;;;GACA;EAXD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAIA;;;;;;;;;yEAAgC;;;;;;;GAO/B;EATD,AAAA,kBAAoC;;0DAApC,eAAoC;;;;;;;;;;;;;;GAAA;EAIpC,AAAA,oBAIC,4BAJgC,SAAiB;UAC1C,cAAgC;UAEtC,KAAQ,GAAY,cAAY,IAAI,SAAO;IAA3C;;;;;;;2HAAA,KAAQ;;yEAAA;;GACT;;;;;;;;;;;;;;;;IAND;qCAAA;;;;;;;;;;;0GAAgC;KAAA;;;;;;;;;;;;"
+}
